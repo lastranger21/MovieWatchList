@@ -36,7 +36,7 @@ class movieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         rv_movie=view.findViewById<RecyclerView>(R.id.movie_rv)
         showView()
-        var myToast=Toast.makeText(context,"toast message with gravity",Toast.LENGTH_SHORT)
+        var myToast= Toast.makeText(context,"toast message with gravity", Toast.LENGTH_SHORT)
         myToast.show()
     }
     private fun showView() {

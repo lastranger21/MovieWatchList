@@ -40,7 +40,7 @@ class favoriteFragment : Fragment() {
     }
     private fun showView() {
         rv_movie.layoutManager= LinearLayoutManager(activity)
-        rv_movie.adapter=MovieAdapter(movies)
+        rv_movie.adapter=favoriteAdapter(movies)
     }
     fun initData(){
         movies.add(MovieModel("The raid 1",9.9,false,"/lol"))
