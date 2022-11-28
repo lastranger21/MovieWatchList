@@ -24,8 +24,8 @@ class MovieAdapter(private val listMovie:ArrayList<MovieModel>) : RecyclerView.A
     override fun onBindViewHolder(holder: MovieAdapter.CardViewHolder, position: Int) {
         val movie=listMovie[position]
         Glide.with(holder.itemView.context).load("https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.png").into(holder.gambar)
-        holder.judul.text=movie.getJudul()
-        holder.rating.text=movie.Rating.toString()
+        holder.judul.text=movie.judul
+        holder.rating.text=movie.rating.toString()
     }
 
     override fun getItemCount(): Int {
