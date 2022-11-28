@@ -8,8 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.moviewatchlist.API.Movie
 
-class favoriteAdapter(private val listMovie:ArrayList<MovieModel>) : RecyclerView.Adapter<favoriteAdapter.CardViewHolder>() {
+class favoriteAdapter(private val listMovie:ArrayList<Movie>) : RecyclerView.Adapter<favoriteAdapter.CardViewHolder>() {
     class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //        memilih bagian card yang dinamis
         var gambar:ImageView = itemView.findViewById(R.id.imageView)
@@ -26,8 +27,8 @@ class favoriteAdapter(private val listMovie:ArrayList<MovieModel>) : RecyclerVie
     override fun onBindViewHolder(holder: favoriteAdapter.CardViewHolder, position: Int) {
         val movie=listMovie[position]
         Glide.with(holder.itemView.context).load("https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.png").into(holder.gambar)
-        holder.judul.text=movie.judul
-        holder.rating.text=movie.rating.toString()
+        holder.judul.text=movie.title
+        holder.rating.text=movie.vote_average.toString()
         holder.buttonTambah.text="HAPUS FAVORIT"
     }
 

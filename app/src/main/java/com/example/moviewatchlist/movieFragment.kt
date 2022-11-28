@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moviewatchlist.API.Movie
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,13 +24,15 @@ private const val ARG_PARAM2 = "param2"
  */
 class movieFragment : Fragment() {
     private lateinit var rv_movie: RecyclerView
-    private val movies=ArrayList<MovieModel>()
+    private val movies=ArrayList<Movie>()
+    private lateinit var viewModel: MovieViewModel
+    private var movieAdapter : MovieAdapter = MovieAdapter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        initData()
+
         return inflater.inflate(R.layout.fragment_movie, container, false)
 
     }
@@ -35,26 +40,22 @@ class movieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_movie=view.findViewById<RecyclerView>(R.id.movie_rv)
-        showView()
-        var myToast= Toast.makeText(context,"toast message with gravity", Toast.LENGTH_SHORT)
-        myToast.show()
-    }
-    private fun showView() {
-        rv_movie.layoutManager= LinearLayoutManager(activity)
-        rv_movie.adapter=MovieAdapter(movies)
-    }
-    fun initData(){
-        movies.add(MovieModel("The raid 1",9.9,false,"/lol"))
-        movies.add(MovieModel("The raid True",9.9,true,"/lol"))
-        movies.add(MovieModel("The raid True",9.9,true,"/lol"))
-        movies.add(MovieModel("The raid True",9.9,true,"/lol"))
-        movies.add(MovieModel("Combat",9.9,false,"/lol"))
-        movies.add(MovieModel("Lenovo : END GAMING PArt II",9.9,true,"/lol"))
-        movies.add(MovieModel("The roid",9.9,true,"/lol"))
-        movies.add(MovieModel("The rBlack",9.9,true,"/lol"))
-        movies.add(MovieModel("Fast and forious",9.9,false,"/lol"))
+        prepareRecyclerView()
+
+        viewModel=ViewModelProvider(this)[MovieViewModel::class.java]
+        viewModel.getPopularMovies()
+        viewModel.observeMovieLiveData().observe(viewLifecycleOwner, Observer {movielist->
+            movieAdapter.setMovieList(movielist)
+        })
+
 
     }
+    private fun prepareRecyclerView() {
+        rv_movie.adapter=movieAdapter
+        rv_movie.layoutManager=LinearLayoutManager(activity)
+    }
+
+
 
 
 }

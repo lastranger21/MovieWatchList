@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moviewatchlist.API.Movie
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,7 +22,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class favoriteFragment : Fragment() {
     private lateinit var rv_movie: RecyclerView
-    private val movies=ArrayList<MovieModel>()
+    private val movies=ArrayList<Movie>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,7 +44,7 @@ class favoriteFragment : Fragment() {
         rv_movie.adapter=favoriteAdapter(movies)
     }
     fun initData(){
-        movies.add(MovieModel("The raid 1",9.9,false,"/lol"))
+//        movies.add(MovieModel("The raid 1",9.9,false,"/lol"))
 
     }
 
