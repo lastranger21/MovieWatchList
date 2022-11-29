@@ -47,10 +47,21 @@ class movieFragment : Fragment() {
         viewModel.observeMovieLiveData().observe(viewLifecycleOwner, Observer {movielist->
             movieAdapter.setMovieList(movielist)
         })
+//        ketika item pada recycler view ditekan
         movieAdapter.setOnItemClickListener(
             object : MovieAdapter.onItemClickListener{
                 override fun onItemClick(movie: Movie) {
+                    val data = Bundle()
+                    data.putString("title",movie.title)
+
+                    val fragDetail = detailFragment()
+                    fragDetail.arguments=data
                     Toast.makeText(activity,"item "+movie.title,Toast.LENGTH_SHORT).show()
+                    requireActivity().supportFragmentManager.beginTransaction().apply {
+                        replace(R.id.fragContainer,fragDetail)
+                        commit()
+                    }
+
                 }
             }
         )
