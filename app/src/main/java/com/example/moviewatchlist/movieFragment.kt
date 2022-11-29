@@ -47,6 +47,13 @@ class movieFragment : Fragment() {
         viewModel.observeMovieLiveData().observe(viewLifecycleOwner, Observer {movielist->
             movieAdapter.setMovieList(movielist)
         })
+        movieAdapter.setOnItemClickListener(
+            object : MovieAdapter.onItemClickListener{
+                override fun onItemClick(movie: Movie) {
+                    Toast.makeText(activity,"item "+movie.title,Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
 
 
     }

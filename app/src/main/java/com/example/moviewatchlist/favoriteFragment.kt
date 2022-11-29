@@ -28,7 +28,6 @@ class favoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        initData()
         return inflater.inflate(R.layout.fragment_movie, container, false)
     }
 
@@ -36,17 +35,14 @@ class favoriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         rv_movie=view.findViewById<RecyclerView>(R.id.movie_rv)
         showView()
-        val myToast=Toast.makeText(context,"toast message with gravity",Toast.LENGTH_SHORT)
+        val myToast=Toast.makeText(context,"Fragment favorite completed",Toast.LENGTH_SHORT)
         myToast.show()
     }
     private fun showView() {
         rv_movie.layoutManager= LinearLayoutManager(activity)
         rv_movie.adapter=favoriteAdapter(movies)
     }
-    fun initData(){
-//        movies.add(MovieModel("The raid 1",9.9,false,"/lol"))
 
-    }
 
 
 }
