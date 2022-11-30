@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import com.bumptech.glide.Glide
+import java.lang.Exception
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,6 +22,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class detailFragment : Fragment() {
+    lateinit var imgFind:ImageView
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,16 +40,32 @@ class detailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+        val view:View=inflater.inflate(R.layout.fragment_detail, container, false)
+        imgFind=view.findViewById(R.id.backdrop_detail)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var arguments=arguments
         val title=this.arguments?.get("title")
-
+        val backdrop_path=this.arguments?.get("backdrop_path")
+        val overview=this.arguments?.get("overview")
+        val rating=this.arguments?.get("rating")
+        val popularity=this.arguments?.get("popularity")
         // get display
+
+        try {
+            Glide.with(this).load("https://image.tmdb.org/t/p/original/"+backdrop_path.toString()).into(imgFind)
+        }catch (c:Exception){
+            Toast.makeText(activity,"item "+c.message.toString(), Toast.LENGTH_SHORT).show()
+        }
+//
         activity?.findViewById<TextView>(R.id.title_detail)?.setText(title.toString())
+        activity?.findViewById<TextView>(R.id.overview_detail)?.setText(overview.toString())
+        activity?.findViewById<TextView>(R.id.rating_detail)?.setText(rating.toString())
+        activity?.findViewById<TextView>(R.id.popularity_detail)?.setText(popularity.toString())
+
 
     }
 

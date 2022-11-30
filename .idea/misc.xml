@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidFile/MovieWatchList/app/src/main/res/drawable/ic_baseline_airplanemode_active_24.xml" value="0.224" />
+        <entry key="..\:/AndroidFile/MovieWatchList/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.224" />
+        <entry key="..\:/AndroidFile/MovieWatchList/app/src/main/res/drawable/ic_baseline_local_movies_24.xml" value="0.224" />
+        <entry key="..\:/AndroidFile/MovieWatchList/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.224" />
         <entry key="..\:/AndroidFile/MovieWatchList/app/src/main/res/layout/fragment_detail.xml" value="0.264" />
+        <entry key="..\:/AndroidFile/MovieWatchList/app/src/main/res/layout/rv_row.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/onlym/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/activity_main.xml" value="0.25" />
       </map>
     </option>

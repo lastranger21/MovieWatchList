@@ -53,6 +53,10 @@ class movieFragment : Fragment() {
                 override fun onItemClick(movie: Movie) {
                     val data = Bundle()
                     data.putString("title",movie.title)
+                    data.putString("backdrop_path",movie.backdrop_path)
+                    data.putString("overview",movie.overview)
+                    data.putString("rating",movie.vote_average.toString())
+                    data.putString("popularity",movie.popularity.toString())
 
                     val fragDetail = detailFragment()
                     fragDetail.arguments=data
