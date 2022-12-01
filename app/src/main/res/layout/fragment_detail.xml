@@ -95,7 +95,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:id="@+id/overview_detail"
-                android:justificationMode="inter_word"/>
+                android:justificationMode="inter_word"
+                android:padding="20dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

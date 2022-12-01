@@ -28,7 +28,24 @@ class MovieViewModel : ViewModel() {
                 }
             }
             override fun onFailure(call: Call<Movies>, t: Throwable) {
-                Log.d("TEST API",t.message.toString())
+                Log.d("API FAILURE",t.message.toString())
+            }
+        })
+    }
+
+    fun getSearchMovies(query:String) {
+        RetrofitInstance.api.getSearchMovies(query).enqueue(object  : Callback<Movies>{
+            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
+                if (response.body()!=null){
+                    movieLiveData.value = response.body()!!.results
+                    Log.d("TEST API SEARCH","SUCESS")
+                }
+                else{
+                    return
+                }
+            }
+            override fun onFailure(call: Call<Movies>, t: Throwable) {
+                Log.d("SEARCH API FAILURE",t.message.toString())
             }
         })
     }

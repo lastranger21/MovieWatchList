@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,6 +28,8 @@ class movieFragment : Fragment() {
     private lateinit var rv_movie: RecyclerView
     private val movies=ArrayList<Movie>()
     private lateinit var viewModel: MovieViewModel
+    private lateinit var editTextSearch : EditText
+    private lateinit var searchButton : Button
     private var movieAdapter : MovieAdapter = MovieAdapter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +44,8 @@ class movieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_movie=view.findViewById<RecyclerView>(R.id.movie_rv)
+        editTextSearch=view.findViewById(R.id.search_editText)
+        searchButton=view.findViewById(R.id.search_button)
         prepareRecyclerView()
 
         viewModel=ViewModelProvider(this)[MovieViewModel::class.java]
@@ -69,6 +75,11 @@ class movieFragment : Fragment() {
                 }
             }
         )
+//        ketika button search ditekan
+        searchButton.setOnClickListener{
+            var query:String = editTextSearch.text.toString()
+            viewModel.getSearchMovies(query)
+        }
 
 
     }
