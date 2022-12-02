@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviewatchlist.API.Movie
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +29,7 @@ private const val ARG_PARAM2 = "param2"
 class movieFragment : Fragment() {
     private lateinit var rv_movie: RecyclerView
     private val movies=ArrayList<Movie>()
+    private lateinit var database: DatabaseReference
     private lateinit var viewModel: MovieViewModel
     private lateinit var editTextSearch : EditText
     private lateinit var searchButton : Button
@@ -47,7 +50,6 @@ class movieFragment : Fragment() {
         editTextSearch=view.findViewById(R.id.search_editText)
         searchButton=view.findViewById(R.id.search_button)
         prepareRecyclerView()
-
         viewModel=ViewModelProvider(this)[MovieViewModel::class.java]
         viewModel.getPopularMovies()
         viewModel.observeMovieLiveData().observe(viewLifecycleOwner, Observer {movielist->
@@ -72,6 +74,25 @@ class movieFragment : Fragment() {
                         commit()
                     }
 
+                }
+            }
+        )
+        movieAdapter.setOnFavClickListener(
+            object : MovieAdapter.onFavClickListener{
+                override fun onFavClick(movie: Movie) {
+                    val data = Bundle()
+                    data.putString("title",movie.title)
+                    data.putString("backdrop_path",movie.backdrop_path)
+                    data.putString("overview",movie.overview)
+                    data.putString("rating",movie.vote_average.toString())
+                    data.putString("popularity",movie.popularity.toString())
+                    database = FirebaseDatabase.getInstance().getReference("Movie")
+
+                    database.child(movie.id.toString()).setValue(movie).addOnSuccessListener {
+
+                    }.addOnFailureListener {
+
+                    }
                 }
             }
         )
