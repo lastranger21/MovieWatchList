@@ -56,24 +56,7 @@ class favoriteFragment : Fragment() {
         //ref = FirebaseDatabase.getInstance().getReference("Movie")
 
         showView()
-        adapter.setOnRemoveClickListener(
-            object : favoriteAdapter.onRemoveClickListener{
-                override fun onRemoveClick(movie: Movie) {
-                    Log.d("haha", "hapus ")
-                    val data = Bundle()
-                    data.putString("title",movie.title)
-                    data.putString("backdrop_path",movie.backdrop_path)
-                    data.putString("overview",movie.overview)
-                    data.putString("rating",movie.vote_average.toString())
-                    data.putString("popularity",movie.popularity.toString())
 
-                    //val fragDetail = detailFragment()
-                    ref = FirebaseDatabase.getInstance().getReference("Movie")
-                    removeUserData(movie)
-
-                }
-            }
-        )
         getUserData()
         Log.d("haha", "hapusi ")
 
@@ -95,6 +78,13 @@ class favoriteFragment : Fragment() {
     private fun showView() {
         rv_moviefav.layoutManager= LinearLayoutManager(activity)
         rv_moviefav.adapter=favoriteAdapter(movies)
+    }
+    private fun deleteNote(id:String) {
+
+        FirebaseDatabase.getInstance().getReference("Movie").child(id).removeValue()
+
+
+        //Toast.makeText(mContext,"Deleted", Toast.LENGTH_LONG).show()
     }
     private fun removeUserData(movie:Movie){
         ref = FirebaseDatabase.getInstance().getReference("Movie")
@@ -152,7 +142,7 @@ class favoriteFragment : Fragment() {
                 Log.d("ADAPTER", "tidakberhasil: ")
             }
             override fun onDataChange(snapshot: DataSnapshot) {
-
+                movies.clear();
                 if (snapshot.exists()){
 
                     for (userSnapshot in snapshot.children) {

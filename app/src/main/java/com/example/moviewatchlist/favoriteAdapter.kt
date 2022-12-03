@@ -35,6 +35,7 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
         init{
             buttonTambah.setOnClickListener {
                 glistener?.onRemoveClick(movieList[adapterPosition])
+
             }
         }
     }
@@ -45,6 +46,7 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
     }
 
     override fun onBindViewHolder(holder: favoriteAdapter.CardViewHolder, position: Int) {
+
         val movie=movieList[position]
         Glide.with(holder.itemView.context).load("https://image.tmdb.org/t/p/original/"+movie.poster_path).into(holder.gambar)
         holder.judul.text=movie.title
@@ -54,10 +56,12 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
             deleteNote(movie.id.toString()) // this needs to be the key of the note that the user clicked on
 
             movieList.remove(movie)
+
             notifyDataSetChanged()
+
         }
 
-        //holder.buttonTambah.setOnClickListener {  viewModelFav.add(movie) }
+
     }
 
     override fun getItemCount(): Int {
@@ -65,7 +69,7 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
     }
     private fun deleteNote(id:String) {
 
-        FirebaseDatabase.getInstance().getReference("Movie").child(id!!).removeValue()
+        FirebaseDatabase.getInstance().getReference("Movie").child(id).removeValue()
 
 
         //Toast.makeText(mContext,"Deleted", Toast.LENGTH_LONG).show()
