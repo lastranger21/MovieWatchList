@@ -46,7 +46,7 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
 
     override fun onBindViewHolder(holder: favoriteAdapter.CardViewHolder, position: Int) {
         val movie=movieList[position]
-        Glide.with(holder.itemView.context).load("https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.png").into(holder.gambar)
+        Glide.with(holder.itemView.context).load("https://image.tmdb.org/t/p/original/"+movie.poster_path).into(holder.gambar)
         holder.judul.text=movie.title
         holder.rating.text=movie.vote_average.toString()
         holder.buttonTambah.text="HAPUS FAVORIT"
