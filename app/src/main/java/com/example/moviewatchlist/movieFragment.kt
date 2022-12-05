@@ -70,6 +70,7 @@ class movieFragment : Fragment() {
                     fragDetail.arguments=data
                     Toast.makeText(activity,"item "+movie.title,Toast.LENGTH_SHORT).show()
                     requireActivity().supportFragmentManager.beginTransaction().apply {
+                        setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                         replace(R.id.fragContainer,fragDetail)
                         commit()
                     }
@@ -100,6 +101,7 @@ class movieFragment : Fragment() {
         searchButton.setOnClickListener{
             var query:String = editTextSearch.text.toString()
             viewModel.getSearchMovies(query)
+
         }
 
 
