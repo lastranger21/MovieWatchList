@@ -1,6 +1,5 @@
 package com.example.moviewatchlist
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,13 +26,13 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
     }
     class CardViewHolder(itemView: View, glistener: onRemoveClickListener?, movieList: List<Movie>) : RecyclerView.ViewHolder(itemView) {
         //        memilih bagian card yang dinamis
-        var buttonTambah:Button=itemView.findViewById(R.id.row_button)
+        var buttonHapus:Button=itemView.findViewById(R.id.row_button)
         var gambar:ImageView = itemView.findViewById(R.id.imageView)
         var judul:TextView=itemView.findViewById(R.id.textViewJudul)
         var rating:TextView=itemView.findViewById(R.id.rating)
 
         init{
-            buttonTambah.setOnClickListener {
+            buttonHapus.setOnClickListener {
                 glistener?.onRemoveClick(movieList[adapterPosition])
 
             }
@@ -51,12 +50,10 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
         Glide.with(holder.itemView.context).load("https://image.tmdb.org/t/p/original/"+movie.poster_path).into(holder.gambar)
         holder.judul.text=movie.title
         holder.rating.text=movie.vote_average.toString()
-        holder.buttonTambah.text="HAPUS FAVORIT"
-        holder.buttonTambah.setOnClickListener {
+        holder.buttonHapus.text="HAPUS FAVORIT"
+        holder.buttonHapus.setOnClickListener {
             deleteNote(movie.id.toString()) // this needs to be the key of the note that the user clicked on
-
             movieList.remove(movie)
-
             notifyDataSetChanged()
 
         }

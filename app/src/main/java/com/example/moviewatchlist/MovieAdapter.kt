@@ -68,7 +68,6 @@ class MovieAdapter() : RecyclerView.Adapter<MovieAdapter.CardViewHolder>() {
         Glide.with(holder.itemView.context).load("https://image.tmdb.org/t/p/original/"+movie.poster_path).into(holder.gambar)
         holder.judul.text=movie.title
         holder.rating.text=movie.vote_average.toString()
-
     }
 
     override fun getItemCount(): Int {
