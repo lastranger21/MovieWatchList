@@ -69,25 +69,29 @@
                 app:layout_constraintLeft_toRightOf="@id/totalLikesFav"
                 app:layout_constraintTop_toBottomOf="@+id/textViewJudulFav"
                 app:layout_constraintVertical_bias="0.45" />
-            <ImageButton
+            <ToggleButton
+                android:id="@+id/is_watched"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="70dp"
-                android:background=""
-                android:src="@drawable/ic_baseline_remove_red_eye_24"
+                android:background="@drawable/toggle_selector"
+                android:textOn=""
+                android:textOff=""
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
             <ImageButton
+                android:id="@+id/hapus_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="16dp"
-                android:background=""
+                android:background="@android:color/transparent"
                 android:src="@drawable/ic_baseline_delete_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.48" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -134,8 +134,10 @@ class favoriteFragment : Fragment() {
 
 
     private fun getUserData(){
+        movies.clear()
         ref = FirebaseDatabase.getInstance().getReference("Movie")
         movies = arrayListOf<Movie>()
+
         ref?.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(snapshot: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -156,6 +158,7 @@ class favoriteFragment : Fragment() {
 
 
                     }
+
                     val adapter = favoriteAdapter(movies)
                     rv_moviefav.setAdapter(adapter)
                     adapter.notifyDataSetChanged();

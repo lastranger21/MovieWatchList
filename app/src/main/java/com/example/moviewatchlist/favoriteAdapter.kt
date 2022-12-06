@@ -3,12 +3,11 @@ package com.example.moviewatchlist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moviewatchlist.API.Movie
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<favoriteAdapter.CardViewHolder>() {
@@ -26,11 +25,11 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
     }
     class CardViewHolder(itemView: View, glistener: onRemoveClickListener?, movieList: List<Movie>) : RecyclerView.ViewHolder(itemView) {
         //        memilih bagian card yang dinamis
-        var buttonHapus:Button=itemView.findViewById(R.id.row_button)
-        var gambar:ImageView = itemView.findViewById(R.id.imageView)
-        var judul:TextView=itemView.findViewById(R.id.textViewJudul)
-        var rating:TextView=itemView.findViewById(R.id.rating)
-
+        var buttonHapus:ImageButton=itemView.findViewById(R.id.hapus_button)
+        var gambar:ImageView = itemView.findViewById(R.id.imageViewFav)
+        var judul:TextView=itemView.findViewById(R.id.textViewJudulFav)
+        var rating:TextView=itemView.findViewById(R.id.ratingFav)
+        var is_watched: ToggleButton = itemView.findViewById(R.id.is_watched)
         init{
             buttonHapus.setOnClickListener {
                 glistener?.onRemoveClick(movieList[adapterPosition])
@@ -40,23 +39,37 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): favoriteAdapter.CardViewHolder {
-        val view:View=LayoutInflater.from(parent.context).inflate(R.layout.rv_row,parent,false)
+        val view:View=LayoutInflater.from(parent.context).inflate(R.layout.rv_row_fav,parent,false)
         return CardViewHolder(view, gListener,movieList)
     }
 
     override fun onBindViewHolder(holder: favoriteAdapter.CardViewHolder, position: Int) {
 
         val movie=movieList[position]
+
         Glide.with(holder.itemView.context).load("https://image.tmdb.org/t/p/original/"+movie.poster_path).into(holder.gambar)
         holder.judul.text=movie.title
         holder.rating.text=movie.vote_average.toString()
-        holder.buttonHapus.text="HAPUS FAVORIT"
+
+        //holder.buttonHapus.text="HAPUS FAVORIT"
+
         holder.buttonHapus.setOnClickListener {
             deleteNote(movie.id.toString()) // this needs to be the key of the note that the user clicked on
             movieList.remove(movie)
             notifyDataSetChanged()
 
         }
+        holder.is_watched.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                updateNote(movie.id.toString(),movie.is_watched)
+                notifyDataSetChanged()
+            }else{
+                updateNoted(movie.id.toString(),movie.is_watched)
+                notifyDataSetChanged()
+            }
+        }
+
+
 
 
     }
@@ -71,7 +84,13 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
 
         //Toast.makeText(mContext,"Deleted", Toast.LENGTH_LONG).show()
     }
-
-
+    private fun updateNote(id:String,counters:Int){
+        val mDatabase = FirebaseDatabase.getInstance().getReference("Movie").child(id)
+        mDatabase.child("is_watched").setValue(counters+1)
+    }
+    private fun updateNoted(id:String,counters:Int){
+        val mDatabase = FirebaseDatabase.getInstance().getReference("Movie").child(id)
+        mDatabase.child("is_watched").setValue(0)
+    }
 
 }
