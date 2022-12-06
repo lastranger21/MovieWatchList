@@ -10,4 +10,5 @@
     <color name="grey">#D6E4E5</color>
     <color name="blackReal">#000000</color>
     <color name="cardColor">#152238</color>
+    <color name="transperent">#00152238</color>
 </resources>
