@@ -1,6 +1,8 @@
 package com.example.moviewatchlist
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,22 +46,36 @@ class movieFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_movie, container, false)
 
     }
-    private fun createButtonClickObservable(): Observable<String> {
+    // 1
+    private fun createTextChangeObservable(): Observable<String> {
         // 2
-        return Observable.create { emitter ->
+        val textChangeObservable = Observable.create<String> { emitter ->
             // 3
-            searchButton.setOnClickListener {
+            val textWatcher = object : TextWatcher {
+
+                override fun afterTextChanged(s: Editable?) = Unit
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
                 // 4
-                emitter.onNext(editTextSearch.text.toString())
+                override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    s?.toString()?.let { emitter.onNext(it) }
+                }
             }
 
             // 5
+            editTextSearch.addTextChangedListener(textWatcher)
+
+            // 6
             emitter.setCancellable {
-                // 6
-                searchButton.setOnClickListener(null)
+                editTextSearch.removeTextChangedListener(textWatcher)
             }
         }
+
+        // 7
+        return textChangeObservable
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_movie=view.findViewById<RecyclerView>(R.id.movie_rv)
@@ -120,12 +136,15 @@ class movieFragment : Fragment() {
 //
 //        }
 //        ketika search button di click
-        val searchTextObservable = createButtonClickObservable()
+        val searchTextObservable = createTextChangeObservable()
 
         searchTextObservable
             // 2
             .subscribe { query ->
                 // 3
+                if (query==""){
+                    viewModel.getPopularMovies()
+                }
                 viewModel.getSearchMovies(query)
             }
 
