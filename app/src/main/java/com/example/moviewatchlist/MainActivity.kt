@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         moviesButton=findViewById(R.id.moviesButton)
         favButton=findViewById<ImageView>(R.id.favoritesButton)
         moviesButton.setOnClickListener{
+            moviesButton.setColorFilter(resources.getColor(R.color.orange))
+            favButton.clearColorFilter()
             supportFragmentManager.beginTransaction().apply {
                 setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 replace(R.id.fragContainer,movieFrag)
@@ -34,6 +36,8 @@ class MainActivity : AppCompatActivity() {
         }
         favButton.setOnClickListener{
             supportFragmentManager.beginTransaction().apply {
+                favButton.setColorFilter(resources.getColor(R.color.orange))
+                moviesButton.clearColorFilter()
                 setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 replace(R.id.fragContainer,favFrag)
                 commit()

@@ -18,6 +18,7 @@ import com.example.moviewatchlist.API.Movie
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +36,7 @@ class movieFragment : Fragment() {
     private lateinit var database: DatabaseReference
     private lateinit var viewModel: MovieViewModel
     private lateinit var editTextSearch : EditText
-    private lateinit var searchButton : Button
+//    private lateinit var searchButton : Button
     private var movieAdapter : MovieAdapter = MovieAdapter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,7 +81,7 @@ class movieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         rv_movie=view.findViewById<RecyclerView>(R.id.movie_rv)
         editTextSearch=view.findViewById(R.id.search_editText)
-        searchButton=view.findViewById(R.id.search_button)
+//        searchButton=view.findViewById(R.id.search_button)
         prepareRecyclerView()
         viewModel=ViewModelProvider(this)[MovieViewModel::class.java]
         viewModel.getPopularMovies()
@@ -113,12 +114,6 @@ class movieFragment : Fragment() {
         movieAdapter.setOnFavClickListener(
             object : MovieAdapter.onFavClickListener{
                 override fun onFavClick(movie: Movie) {
-                    val data = Bundle()
-                    data.putString("title",movie.title)
-                    data.putString("backdrop_path",movie.backdrop_path)
-                    data.putString("overview",movie.overview)
-                    data.putString("rating",movie.vote_average.toString())
-                    data.putString("popularity",movie.popularity.toString())
                     database = FirebaseDatabase.getInstance().getReference("Movie")
 
                     database.child(movie.id.toString()).setValue(movie).addOnSuccessListener {
@@ -129,24 +124,35 @@ class movieFragment : Fragment() {
                 }
             }
         )
-//        ketika button search ditekan
-//        searchButton.setOnClickListener{
-//            var query:String = editTextSearch.text.toString()
-//            viewModel.getSearchMovies(query)
-//
-//        }
-//        ketika search button di click
-        val searchTextObservable = createTextChangeObservable()
 
-        searchTextObservable
-            // 2
-            .subscribe { query ->
-                // 3
-                if (query==""){
+        val textChangeSubject = PublishSubject.create<String> { emitter ->
+            // 3
+            val textWatcher = object : TextWatcher {
+
+                override fun afterTextChanged(s: Editable?) = Unit
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+                // 4
+                override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    s?.toString()?.let { emitter.onNext(it) }
+                }
+            }
+
+            // 5
+            editTextSearch.addTextChangedListener(textWatcher)
+
+            // 6
+            emitter.setCancellable {
+                editTextSearch.removeTextChangedListener(textWatcher)
+            }
+        }
+        textChangeSubject.subscribe {query->
+            if (query==""){
                     viewModel.getPopularMovies()
                 }
-                viewModel.getSearchMovies(query)
-            }
+            viewModel.getSearchMovies(query)
+        }
 
 
     }
