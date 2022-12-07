@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moviewatchlist.API.Movie
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import io.reactivex.rxjava3.core.Observable
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,7 +44,22 @@ class movieFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_movie, container, false)
 
     }
+    private fun createButtonClickObservable(): Observable<String> {
+        // 2
+        return Observable.create { emitter ->
+            // 3
+            searchButton.setOnClickListener {
+                // 4
+                emitter.onNext(editTextSearch.text.toString())
+            }
 
+            // 5
+            emitter.setCancellable {
+                // 6
+                searchButton.setOnClickListener(null)
+            }
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_movie=view.findViewById<RecyclerView>(R.id.movie_rv)
@@ -98,11 +114,20 @@ class movieFragment : Fragment() {
             }
         )
 //        ketika button search ditekan
-        searchButton.setOnClickListener{
-            var query:String = editTextSearch.text.toString()
-            viewModel.getSearchMovies(query)
+//        searchButton.setOnClickListener{
+//            var query:String = editTextSearch.text.toString()
+//            viewModel.getSearchMovies(query)
+//
+//        }
+//        ketika search button di click
+        val searchTextObservable = createButtonClickObservable()
 
-        }
+        searchTextObservable
+            // 2
+            .subscribe { query ->
+                // 3
+                viewModel.getSearchMovies(query)
+            }
 
 
     }
