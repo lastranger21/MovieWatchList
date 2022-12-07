@@ -77,7 +77,7 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
             //notifyDataSetChanged()
 
         }
-        FirebaseDatabase.getInstance().getReference("Movie").child(movie.id.toString()).orderByChild(movie.title.toString())
+
 
 
 
