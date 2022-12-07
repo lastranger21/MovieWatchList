@@ -1,5 +1,9 @@
 package com.example.moviewatchlist
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.net.http.SslCertificate.saveState
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,8 +11,8 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moviewatchlist.API.Movie
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+
 
 class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<favoriteAdapter.CardViewHolder>() {
 
@@ -29,7 +33,8 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
         var gambar:ImageView = itemView.findViewById(R.id.imageViewFav)
         var judul:TextView=itemView.findViewById(R.id.textViewJudulFav)
         var rating:TextView=itemView.findViewById(R.id.ratingFav)
-        var is_watched: ToggleButton = itemView.findViewById(R.id.is_watched)
+        var status:TextView = itemView.findViewById(R.id.status)
+        var is_watched: ImageButton = itemView.findViewById(R.id.is_watched)
         init{
             buttonHapus.setOnClickListener {
                 glistener?.onRemoveClick(movieList[adapterPosition])
@@ -50,7 +55,7 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
         Glide.with(holder.itemView.context).load("https://image.tmdb.org/t/p/original/"+movie.poster_path).into(holder.gambar)
         holder.judul.text=movie.title
         holder.rating.text=movie.vote_average.toString()
-
+        holder.status.text=movie.already_watch
         //holder.buttonHapus.text="HAPUS FAVORIT"
 
         holder.buttonHapus.setOnClickListener {
@@ -59,16 +64,20 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
             notifyDataSetChanged()
 
         }
-        holder.is_watched.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
-                updateNote(movie.id.toString(),movie.is_watched)
+        holder.is_watched.setOnClickListener {
+            if (movie.already_watch.toString()=="not watched"){
+                updateNote(movie.id.toString(),movie.already_watch.toString())
+                Log.d("ADAPTER", "is watched berhasil: ")
                 notifyDataSetChanged()
             }else{
-                updateNoted(movie.id.toString(),movie.is_watched)
+                updateNoted(movie.id.toString(),movie.already_watch.toString())
+                Log.d("ADAPTER", "is watched gagal: ")
                 notifyDataSetChanged()
             }
-        }
+            //notifyDataSetChanged()
 
+        }
+        FirebaseDatabase.getInstance().getReference("Movie").child(movie.id.toString()).orderByChild(movie.title.toString())
 
 
 
@@ -84,13 +93,13 @@ class favoriteAdapter(var movieList: ArrayList<Movie>) : RecyclerView.Adapter<fa
 
         //Toast.makeText(mContext,"Deleted", Toast.LENGTH_LONG).show()
     }
-    private fun updateNote(id:String,counters:Int){
+    private fun updateNote(id:String,counters:String){
         val mDatabase = FirebaseDatabase.getInstance().getReference("Movie").child(id)
-        mDatabase.child("is_watched").setValue(counters+1)
+        mDatabase.child("already_watch").setValue("already watched")
     }
-    private fun updateNoted(id:String,counters:Int){
+    private fun updateNoted(id:String,counters:String){
         val mDatabase = FirebaseDatabase.getInstance().getReference("Movie").child(id)
-        mDatabase.child("is_watched").setValue(0)
+        mDatabase.child("already_watch").setValue("not watched")
     }
 
 }

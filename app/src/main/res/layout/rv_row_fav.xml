@@ -69,14 +69,26 @@
                 app:layout_constraintLeft_toRightOf="@id/totalLikesFav"
                 app:layout_constraintTop_toBottomOf="@+id/textViewJudulFav"
                 app:layout_constraintVertical_bias="0.45" />
-            <ToggleButton
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="sudah ditonton"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintLeft_toRightOf="@id/ratingFav"
+                app:layout_constraintTop_toBottomOf="@+id/textViewJudulFav" />
+
+            <ImageButton
                 android:id="@+id/is_watched"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="70dp"
-                android:background="@drawable/toggle_selector"
-                android:textOn=""
-                android:textOff=""
+                android:background="@color/transperent"
+                android:src="@drawable/ic_baseline_remove_red_eye_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

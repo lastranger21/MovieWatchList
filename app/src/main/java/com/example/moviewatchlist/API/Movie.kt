@@ -15,5 +15,7 @@ data class Movie(
     val video: Boolean?=null,
     val vote_average: Double?=null,
     val vote_count: Int?=null,
-    val is_watched: Int=0
+    val is_watched: Int=0,
+    val already_watch:String="not watched"
+
 )

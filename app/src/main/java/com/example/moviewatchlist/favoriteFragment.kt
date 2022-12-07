@@ -57,6 +57,7 @@ class favoriteFragment : Fragment() {
 
         showView()
 
+
         getUserData()
         Log.d("haha", "hapusi ")
 
@@ -77,8 +78,10 @@ class favoriteFragment : Fragment() {
     }
     private fun showView() {
         rv_moviefav.layoutManager= LinearLayoutManager(activity)
+        movies.sortBy { it.title}
         rv_moviefav.adapter=favoriteAdapter(movies)
     }
+
     private fun deleteNote(id:String) {
 
         FirebaseDatabase.getInstance().getReference("Movie").child(id).removeValue()
@@ -86,58 +89,15 @@ class favoriteFragment : Fragment() {
 
         //Toast.makeText(mContext,"Deleted", Toast.LENGTH_LONG).show()
     }
-    private fun removeUserData(movie:Movie){
-        ref = FirebaseDatabase.getInstance().getReference("Movie")
-        movies = arrayListOf<Movie>()
-        val query= movie.id.toString()
-        Log.d("pessan", "removeUserData: "+query)
-        //ref= FirebaseDatabase.getInstance().getReference().child("Movie").child(movie.id.toString())
-
-                        //val mov = userSnapshot.getRef().removeValue()
-        ref?.removeEventListener(object : ValueEventListener {
-            override fun onCancelled(snapshot: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                Log.d("ADAPTER", "tidakberhasil: ")
-            }
-           override fun onDataChange(snapshot: DataSnapshot) {
-
-                if (snapshot.exists()){
-
-                    for (userSnapshot in snapshot.children) {
-                        if (query==userSnapshot.getKey()) {
-                            Log.i(
-                                "Firebase",                               // 👈 Log the key and value
-                                "Reading Member2 from " + userSnapshot.getKey() // 👈 to know where the
-                                        + ", value=" + userSnapshot.getValue()           // 👈 problem is in your
-                            );
-                            userSnapshot.getRef().removeValue()
-                            //val mov = userSnapshot.removeValue()
-                        }
-
-                    }
-
-                    val adapter = favoriteAdapter(movies)
-                    rv_moviefav.setAdapter(adapter)
-                    //adapter.notifyDataSetChanged();
-
-                }
 
 
-
-
-        }
-
-        //ref.child("id").child(movies.getKey()).removeValue()
-
-
-            })}
 
 
     private fun getUserData(){
-        movies.clear()
+        //movies.clear()
         ref = FirebaseDatabase.getInstance().getReference("Movie")
         movies = arrayListOf<Movie>()
-
+        //val d = FirebaseDatabase.getInstance().getReference("Movie").child()
         ref?.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(snapshot: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -154,6 +114,7 @@ class favoriteFragment : Fragment() {
                                         +", value="+userSnapshot.getValue()           // 👈 problem is in your
                             );
                             val mov = userSnapshot.getValue(Movie::class.java)
+
                             movies?.add(mov!!)
 
 
