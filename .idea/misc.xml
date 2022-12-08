@@ -18,14 +18,13 @@
         <entry key="..\:/Users/labib/AndroidStudioProjects/MovieWatchList/app/src/main/res/drawable/ic_baseline_local_movies_24.xml" value="0.148" />
         <entry key="..\:/Users/labib/AndroidStudioProjects/MovieWatchList/app/src/main/res/drawable/ic_baseline_outlined_flag_24.xml" value="0.1" />
         <entry key="..\:/Users/labib/AndroidStudioProjects/MovieWatchList/app/src/main/res/drawable/toggle_selector.xml" value="0.1" />
+        <entry key="..\:/Users/labib/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/activity_main.xml" value="0.11770833333333333" />
         <entry key="..\:/Users/labib/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/fragment_detail.xml" value="0.33" />
         <entry key="..\:/Users/labib/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/fragment_favorite.xml" value="0.2" />
+        <entry key="..\:/Users/labib/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/fragment_movie.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/labib/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/rv_row.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/labib/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/rv_row_fav.xml" value="0.33" />
         <entry key="..\:/Users/onlym/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/onlym/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/fragment_detail.xml" value="0.25" />
-        <entry key="..\:/Users/onlym/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/fragment_favorite.xml" value="0.25" />
-        <entry key="..\:/Users/onlym/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/fragment_movie.xml" value="0.25" />
       </map>
     </option>
   </component>
