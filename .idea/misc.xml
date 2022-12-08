@@ -23,6 +23,9 @@
         <entry key="..\:/Users/labib/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/rv_row.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/labib/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/rv_row_fav.xml" value="0.33" />
         <entry key="..\:/Users/onlym/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/onlym/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/fragment_detail.xml" value="0.25" />
+        <entry key="..\:/Users/onlym/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/fragment_favorite.xml" value="0.25" />
+        <entry key="..\:/Users/onlym/AndroidStudioProjects/MovieWatchList/app/src/main/res/layout/fragment_movie.xml" value="0.25" />
       </map>
     </option>
   </component>

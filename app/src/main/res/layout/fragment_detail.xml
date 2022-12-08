@@ -94,6 +94,7 @@
                 app:layout_constraintTop_toBottomOf="@id/ratingPopularity_details"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/blackReal"
                 android:id="@+id/overview_detail"
                 android:justificationMode="inter_word"
                 android:padding="20dp"/>

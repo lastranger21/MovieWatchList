@@ -16,6 +16,9 @@
             android:layout_height="50dp"
             android:id="@+id/search_editText"
             android:hint="Judul Film Favorit"
+            android:textColor="@color/blackReal"
+            android:textColorHint="@color/blackReal"
+            android:backgroundTint="@color/blackReal"
             android:gravity="center"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
     <androidx.recyclerview.widget.RecyclerView

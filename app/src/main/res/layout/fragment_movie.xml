@@ -16,6 +16,8 @@
             android:layout_width="170dp"
             android:layout_height="50dp"
             android:id="@+id/search_editText"
+            android:textColorHint="@color/blackReal"
+            android:backgroundTint="@color/blackReal"
             android:hint="Judul Film"
             android:gravity="center"/>
 
